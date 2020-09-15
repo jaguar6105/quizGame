@@ -5,6 +5,8 @@ var scoreNav = document.querySelector(".highScore");
 var timeEl = document.querySelector(".time");
 
 var question1 = [false, false, false, true];
+var questionText;
+var answer = []
 var question2 = [false, true, false, false];
 var question3 = [false, false, false, true];
 var question4 = [true, false, false, false];
@@ -99,9 +101,10 @@ function startQuiz() {
 
 //individual question screen
 function questionScreen() {
-    questionHeader.textContent = "Question " + counter;
 
-    var question = getQuestion(counter);
+    getQuestion(counter);
+    questionHeader.textContent = "Question " + counter + ": " + questionText;
+
 
 
     //generate button text
@@ -109,7 +112,7 @@ function questionScreen() {
 
         var button = document.querySelector("#btn" + i);
 
-        button.textContent = question[i];
+        button.textContent = answer[i];
     }
 }
 
@@ -144,18 +147,32 @@ function correct() {
 function getQuestion(counter) {
 
     if (counter == 1) {
+        answer = ["orange", "yellow", "green", "blue"]
+        questionText = "What color is the sky?";
         return question1;
     }
     else if (counter == 2) {
+        answer = ["orange", "red", "yellow", "blue"]
+        questionText = "What color is an apple?";
+
         return question2;
     }
     else if (counter == 3) {
+        answer = ["orange", "red", "yellow", "blue"]
+        questionText = "What color is water?";
+
         return question3;
     }
     else if (counter == 4) {
+        answer = ["orange", "red", "yellow", "blue"]
+        questionText = "What color is an orange?";
+
         return question4;
     }
     else if (counter == 5) {
+        answer = ["orange", "red", "yellow", "blue"]
+        questionText = "What color is an banana?";
+
         return question5;
     }
 
@@ -183,8 +200,9 @@ contentEl.addEventListener("click", function (event) {
 //creates save score screen
 function scoreScreen() {
     clearInterval(timerInterval);
+    score = score + secondsLeft;
 
-    questionHeader.textContent = score;
+    questionHeader.textContent = "Your score is " + score;
 
     var form = document.createElement("form");
     var textIn = document.createElement("input");
