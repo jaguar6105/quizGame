@@ -1,5 +1,7 @@
 var questionHeader = document.querySelector(".question");
 var contentEl = document.querySelector(".content");
+var homeNav = document.querySelector(".home");
+var scoreNav = document.querySelector(".highScore");
 
 var question1 = [false, false, false, true];
 var question2 = [false, true, false, false];
@@ -15,8 +17,15 @@ init();
 
 homeScreen();
 
+homeNav.addEventListener("click", homeScreen);
+scoreNav.addEventListener("click", highScores);
+
 //opens home screen
 function homeScreen() {
+    while (contentEl.firstChild) {
+        contentEl.removeChild(contentEl.firstChild);
+    }
+    
     score = 0;
     counter == -1;
 
@@ -198,6 +207,11 @@ function init() {
 
 //initializes high score screen
 function highScores() {
+    while (contentEl.firstChild) {
+        contentEl.removeChild(contentEl.firstChild);
+    }
+
+
     questionHeader.textContent = "High Scores";
     var list = document.createElement("ul");
     var home = document.createElement("button");
