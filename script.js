@@ -116,7 +116,7 @@ function questionScreen() {
 //if wrong
 function incorrect() {
     counter++;
-    score++;
+    score--;
     if (counter < 6) {
         questionScreen();
     }
@@ -130,7 +130,7 @@ function incorrect() {
 //if right
 function correct() {
     counter++;
-    score--;
+    score++;
     if (counter < 6) {
         questionScreen();
     }
