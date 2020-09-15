@@ -117,7 +117,6 @@ function questionScreen() {
 function incorrect() {
     counter++;
     score++;
-    console.log("Wrong");
     if (counter < 6) {
         questionScreen();
     }
@@ -132,7 +131,6 @@ function incorrect() {
 function correct() {
     counter++;
     score--;
-    console.log("correct");
     if (counter < 6) {
         questionScreen();
     }
@@ -200,7 +198,6 @@ function scoreScreen() {
 
     form.addEventListener("submit", function (event) {
         event.preventDefault();
-        console.log("saved");
         allScores.push(textIn.value + " - " + score)
         localStorage.setItem("scores", JSON.stringify(allScores));
 
@@ -218,7 +215,6 @@ function init() {
     var test = localStorage.getItem("scores");
     if (test) {
         allScores = JSON.parse(test);
-        console.log(allScores);
     }
 }
 
