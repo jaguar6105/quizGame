@@ -157,7 +157,7 @@ contentEl.addEventListener("click", function(event) {
   }
 
 
-
+//creates save score screen
   function scoreScreen() {
     questionHeader.textContent = score;
 
@@ -176,7 +176,9 @@ contentEl.addEventListener("click", function(event) {
         console.log("saved");
         allScores.push(textIn.value + " - " + score)
         localStorage.setItem("scores", JSON.stringify(allScores));
-  
+        
+        contentEl.removeChild(form);   
+        highScores();
     });
 
     contentEl.appendChild(form);
@@ -184,11 +186,27 @@ contentEl.addEventListener("click", function(event) {
     form.appendChild(submit);
   }
 
+  //initialize high scores
   function init() {
     var test = localStorage.getItem("scores");
     if(test) {
       allScores = JSON.parse(test);
       console.log(allScores);
     }
+  }
+
+  //initializes high score screen
+  function highScores() {
+    questionHeader.textContent = "High Scores";
+    var list = document.createElement("ul");
+    contentEl.appendChild(list);
+
+
+    for (var i = 0; i < allScores.length; i++) {
+        var scoreEl = document.createElement("li");
+        scoreEl.textContent = allScores[i];
+        list.appendChild(scoreEl);
+      }
+
   }
 
