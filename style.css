@@ -1,4 +1,7 @@
 article {
-    background-color: aqua;
-    align-self: center;
+    text-align: center;
+}
+
+.question {
+    text-align: center;
 }
