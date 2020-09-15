@@ -9,6 +9,9 @@ var question5 = [false, false, true, false];
 
 var counter;
 var score;
+var allScores = [];
+
+init();
 
 homeScreen();
 
@@ -74,12 +77,6 @@ function questionScreen() {
         var button = document.querySelector("#btn"+i);
     
         button.textContent = question[i];
-  /*      if(question[i]) {
-            button.addEventListener("click", correct);
-        }
-        else {
-            button.addEventListener("click", incorrect);
-        }*/
       }
 }
 
@@ -93,6 +90,7 @@ function incorrect() {
     }
     else {
         closeButtons();
+        scoreScreen();
     }
 }
 
@@ -107,6 +105,7 @@ function correct() {
     }
     else {
         closeButtons();
+        scoreScreen();
     }
 }
 
@@ -157,4 +156,39 @@ contentEl.addEventListener("click", function(event) {
       }
   }
 
+
+
+  function scoreScreen() {
+    questionHeader.textContent = score;
+
+    var form = document.createElement("form");
+    var textIn = document.createElement("input");
+    var submit = document.createElement("input");
+
+    textIn.setAttribute("type", "text");
+    textIn.setAttribute("id", "initials");
+
+    submit.setAttribute("type", "submit");
+    submit.setAttribute("value", "submit");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        console.log("saved");
+        allScores.push(textIn.value + " - " + score)
+        localStorage.setItem("scores", JSON.stringify(allScores));
+  
+    });
+
+    contentEl.appendChild(form);
+    form.appendChild(textIn);
+    form.appendChild(submit);
+  }
+
+  function init() {
+    var test = localStorage.getItem("scores");
+    if(test) {
+      allScores = JSON.parse(test);
+      console.log(allScores);
+    }
+  }
 
