@@ -86,9 +86,13 @@ function questionScreen() {
 //if wrong
 function incorrect() {
     counter++;
+    score++;
     console.log("Wrong");
     if(counter < 6) {
         questionScreen();
+    }
+    else {
+        closeButtons();
     }
 }
 
@@ -96,12 +100,17 @@ function incorrect() {
 //if right
 function correct() {
     counter++;
+    score--;
     console.log("correct");
     if(counter < 6) {
         questionScreen();
     }
+    else {
+        closeButtons();
+    }
 }
 
+//get question arrays to fill button text
 function getQuestion(counter) {
 
     if(counter == 1) {
@@ -138,5 +147,14 @@ contentEl.addEventListener("click", function(event) {
         }
     }
   });
+
+  function closeButtons() {
+      questionHeader.textContent = score;
+    for (var i = 0; i < 4; i++) {
+    
+        var button = document.querySelector("#btn"+i);
+        contentEl.removeChild(button);            
+      }
+  }
 
 
