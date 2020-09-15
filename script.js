@@ -93,7 +93,7 @@ function startQuiz() {
 
 
     counter = 1;
-    secondsLeft = 6;
+    secondsLeft = 60;
     setTime();
     questionScreen();
 }
@@ -120,6 +120,7 @@ function questionScreen() {
 function incorrect() {
     counter++;
     score--;
+    secondsLeft = secondsLeft - 10;
     if (counter < 6) {
         questionScreen();
     }
@@ -200,7 +201,7 @@ contentEl.addEventListener("click", function (event) {
 //creates save score screen
 function scoreScreen() {
     clearInterval(timerInterval);
-    score = score + secondsLeft;
+    //score = score + secondsLeft;
 
     questionHeader.textContent = "Your score is " + score;
 
