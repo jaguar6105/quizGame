@@ -148,31 +148,31 @@ function correct() {
 function getQuestion(counter) {
 
     if (counter == 1) {
-        answer = ["orange", "yellow", "green", "blue"]
-        questionText = "What color is the sky?";
+        answer = ["Integer", "String", "Boolean", "Array"]
+        questionText = "What type of variable is not primitive?";
         return question1;
     }
     else if (counter == 2) {
-        answer = ["orange", "red", "yellow", "blue"]
-        questionText = "What color is an apple?";
+        answer = ["<section>", "<div>", "<article>", "<aside>"]
+        questionText = "What should not be used in semantic html?";
 
         return question2;
     }
     else if (counter == 3) {
-        answer = ["orange", "red", "yellow", "blue"]
-        questionText = "What color is water?";
+        answer = ["$", "#", "-", "+"]
+        questionText = "What symbol is used in concatination?";
 
         return question3;
     }
     else if (counter == 4) {
-        answer = ["orange", "red", "yellow", "blue"]
-        questionText = "What color is an orange?";
+        answer = ["var", "int", "String", "fuction"]
+        questionText = "What syntax is used to declare a variable in javascript?";
 
         return question4;
     }
     else if (counter == 5) {
-        answer = ["orange", "red", "yellow", "blue"]
-        questionText = "What color is an banana?";
+        answer = ["'pressed'", "'key_up'", "'click'", "'mouse'"]
+        questionText = "What is used in an eventListener to define a button press?";
 
         return question5;
     }
