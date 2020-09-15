@@ -2,6 +2,7 @@ var questionHeader = document.querySelector(".question");
 var contentEl = document.querySelector(".content");
 var homeNav = document.querySelector(".home");
 var scoreNav = document.querySelector(".highScore");
+var timeEl = document.querySelector(".time");
 
 var question1 = [false, false, false, true];
 var question2 = [false, true, false, false];
@@ -20,12 +21,36 @@ homeScreen();
 homeNav.addEventListener("click", homeScreen);
 scoreNav.addEventListener("click", highScores);
 
-//opens home screen
-function homeScreen() {
+var secondsLeft;
+var timerInterval;
+
+function setTime() {
+    timerInterval = setInterval(function() {
+    secondsLeft--;
+    timeEl.textContent = secondsLeft + " seconds left.";
+
+    if(secondsLeft === 0) {
+      clearInterval(timerInterval);
+      emptyContent();
+      scoreScreen();
+    }
+
+  }, 1000);
+}
+
+//clear main div of elements
+function emptyContent() {
     while (contentEl.firstChild) {
         contentEl.removeChild(contentEl.firstChild);
     }
+}
+
+//opens home screen
+function homeScreen() {
+    emptyContent();
     
+    clearInterval(timerInterval);
+
     score = 0;
     counter == -1;
 
@@ -50,10 +75,7 @@ function homeScreen() {
 function startQuiz() {
 
     //remove start page
-    var buttons = document.querySelector(".btn");
-    var summary = document.querySelector("p");
-    contentEl.removeChild(buttons);
-    contentEl.removeChild(summary);
+    emptyContent();
 
     //render question buttons
     for (var i = 0; i < 4; i++) {
@@ -69,6 +91,8 @@ function startQuiz() {
 
 
     counter = 1;
+    secondsLeft = 6;
+    setTime();
     questionScreen();
 }
 
@@ -98,7 +122,7 @@ function incorrect() {
         questionScreen();
     }
     else {
-        closeButtons();
+        emptyContent();
         scoreScreen();
     }
 }
@@ -113,7 +137,7 @@ function correct() {
         questionScreen();
     }
     else {
-        closeButtons();
+        emptyContent();
         scoreScreen();
     }
 }
@@ -156,19 +180,12 @@ contentEl.addEventListener("click", function (event) {
     }
 });
 
-//removes the buttons
-function closeButtons() {
-    questionHeader.textContent = score;
-    for (var i = 0; i < 4; i++) {
-
-        var button = document.querySelector("#btn" + i);
-        contentEl.removeChild(button);
-    }
-}
 
 
 //creates save score screen
 function scoreScreen() {
+    clearInterval(timerInterval);
+
     questionHeader.textContent = score;
 
     var form = document.createElement("form");
@@ -207,9 +224,9 @@ function init() {
 
 //initializes high score screen
 function highScores() {
-    while (contentEl.firstChild) {
-        contentEl.removeChild(contentEl.firstChild);
-    }
+    emptyContent();
+    clearInterval(timerInterval);
+
 
 
     questionHeader.textContent = "High Scores";
@@ -236,9 +253,7 @@ function highScores() {
 
 
     home.addEventListener("click", function () {
-        contentEl.removeChild(list);
-        contentEl.removeChild(home);
-        contentEl.removeChild(clearList);
+        emptyContent();
 
         homeScreen();
     });
