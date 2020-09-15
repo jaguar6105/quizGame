@@ -48,12 +48,12 @@ function startQuiz() {
 
     //render question buttons
     for (var i = 0; i < 4; i++) {
-    
+
         var button = document.createElement("button");
         button.className = "btn btn-primary";
 
-        button.id = "btn"+i;
-        
+        button.id = "btn" + i;
+
         button.setAttribute("value", i);
         contentEl.appendChild(button);
     }
@@ -73,11 +73,11 @@ function questionScreen() {
 
     //generate button text
     for (var i = 0; i < 4; i++) {
-    
-        var button = document.querySelector("#btn"+i);
-    
+
+        var button = document.querySelector("#btn" + i);
+
         button.textContent = question[i];
-      }
+    }
 }
 
 //if wrong
@@ -85,7 +85,7 @@ function incorrect() {
     counter++;
     score++;
     console.log("Wrong");
-    if(counter < 6) {
+    if (counter < 6) {
         questionScreen();
     }
     else {
@@ -100,7 +100,7 @@ function correct() {
     counter++;
     score--;
     console.log("correct");
-    if(counter < 6) {
+    if (counter < 6) {
         questionScreen();
     }
     else {
@@ -112,53 +112,54 @@ function correct() {
 //get question arrays to fill button text
 function getQuestion(counter) {
 
-    if(counter == 1) {
+    if (counter == 1) {
         return question1;
     }
-    else if(counter == 2) {
+    else if (counter == 2) {
         return question2;
     }
-    else if(counter == 3) {
+    else if (counter == 3) {
         return question3;
     }
-    else if(counter == 4) {
+    else if (counter == 4) {
         return question4;
     }
-    else if(counter == 5) {
+    else if (counter == 5) {
         return question5;
     }
 
 }
 
-contentEl.addEventListener("click", function(event) {
+contentEl.addEventListener("click", function (event) {
     var element = event.target;
-  
+
     // If that element is a button...
-    if (element.matches("button") === true  && counter > 0 && counter<6) {
-      // Get its data-index value and remove the todo element from the list
-      var index = element.getAttribute("value");
-      var question = getQuestion(counter);
-        if(question[index]) {
+    if (element.matches("button") === true && counter > 0 && counter < 6) {
+        // Get its data-index value and remove the todo element from the list
+        var index = element.getAttribute("value");
+        var question = getQuestion(counter);
+        if (question[index]) {
             correct()
         }
         else if (question[index] == false) {
             incorrect();
         }
     }
-  });
+});
 
-  function closeButtons() {
-      questionHeader.textContent = score;
+//removes the buttons
+function closeButtons() {
+    questionHeader.textContent = score;
     for (var i = 0; i < 4; i++) {
-    
-        var button = document.querySelector("#btn"+i);
-        contentEl.removeChild(button);            
-      }
-  }
+
+        var button = document.querySelector("#btn" + i);
+        contentEl.removeChild(button);
+    }
+}
 
 
 //creates save score screen
-  function scoreScreen() {
+function scoreScreen() {
     questionHeader.textContent = score;
 
     var form = document.createElement("form");
@@ -171,42 +172,72 @@ contentEl.addEventListener("click", function(event) {
     submit.setAttribute("type", "submit");
     submit.setAttribute("value", "submit");
 
-    form.addEventListener("submit", function(event) {
+    form.addEventListener("submit", function (event) {
         event.preventDefault();
         console.log("saved");
         allScores.push(textIn.value + " - " + score)
         localStorage.setItem("scores", JSON.stringify(allScores));
-        
-        contentEl.removeChild(form);   
+
+        contentEl.removeChild(form);
         highScores();
     });
 
     contentEl.appendChild(form);
     form.appendChild(textIn);
     form.appendChild(submit);
-  }
+}
 
-  //initialize high scores
-  function init() {
+//initialize high scores
+function init() {
     var test = localStorage.getItem("scores");
-    if(test) {
-      allScores = JSON.parse(test);
-      console.log(allScores);
+    if (test) {
+        allScores = JSON.parse(test);
+        console.log(allScores);
     }
-  }
+}
 
-  //initializes high score screen
-  function highScores() {
+//initializes high score screen
+function highScores() {
     questionHeader.textContent = "High Scores";
     var list = document.createElement("ul");
+    var home = document.createElement("button");
+    var clearList = document.createElement("button");
+
     contentEl.appendChild(list);
+
+    home.textContent = "Home screen";
+    contentEl.appendChild(home);
+
+    clearList.textContent = "Clear Scores";
+    contentEl.appendChild(clearList);
+
 
 
     for (var i = 0; i < allScores.length; i++) {
         var scoreEl = document.createElement("li");
         scoreEl.textContent = allScores[i];
         list.appendChild(scoreEl);
-      }
+    }
 
-  }
+
+
+    home.addEventListener("click", function () {
+        contentEl.removeChild(list);
+        contentEl.removeChild(home);
+        contentEl.removeChild(clearList);
+
+        homeScreen();
+    });
+
+    clearList.addEventListener("click", function () {
+        for (var i = 0; i < allScores.length; i++) {
+            var scoreEl = document.querySelector("li");
+
+            list.removeChild(scoreEl);
+        }
+        allScores = [];
+        localStorage.setItem("scores", JSON.stringify(allScores));
+    });
+
+}
 
